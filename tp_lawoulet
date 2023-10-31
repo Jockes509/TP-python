@@ -1,1 +1,63 @@
+import random
+import pickle
+
+nbr_alea=random.randint(0,100)
+nbr_tent=5
+
+
+
+print("")
+print("Hello! Bienvenue sur Jockes Game")
+nom=input("Entrer votre nom svp: ")
+score=0
+
+
+
+
+deci=input("Voulez vous jouer? si oui entrer o sinon n: ")
+while deci=="o":
+        print("")
+        print(nom," l'ordinateur a choisi un nombre compris entre 0 a 100, alors devine le nombre")
+        print("")
+
+        while nbr_tent>0:
+            nbr_tent-=1
+            sc=nbr_tent*30
+            vs=int(input("Entrer un nombre compris entre 0 a 100: "))
+            
+            if vs<nbr_alea:
+                print("C'est plus! reessayer svp, et il vous reste ",nbr_tent,"tentatives")
+                
+            elif vs<nbr_alea:
+                print("C'est moins! reessayer svp, et il vous reste ",nbr_tent,"tentatives")
+
+            else: 
+                break
+            
+        if nbr_tent !=0:
+            print("Felicitations",nom,"! vous avez trouve le bon nombre en ",5-nbr_tent,"essais")
+            print("Votre score est: ", sc)
+            
+            score+=sc
+            
+            datab={
+                "username":nom.lower(),
+                "score":score
+                }
+            output= open("output.pickle","wb")
+            pickle.dump(datab,output)
+            output.close()
+            
+        else: 
+                print("")
+                print("Malheureusement"," vous avez depasse les 5 tentatives, le nombre etait ",nbr_alea)
+                
+                
+        deci=input("Voulez vous jouer? si oui entrer o sinon n: ")
+        if deci=="n":
+            
+            input= open("output.pickle","rb")
+            pickle.load(input)
+            print(nom,"Votre score est: ",score)
+            break
 
